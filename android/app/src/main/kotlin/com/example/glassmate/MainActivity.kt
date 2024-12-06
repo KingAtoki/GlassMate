@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import com.example.glassmate.bluetooth.BleChannelHelper
 import com.example.glassmate.bluetooth.BleManager
+import com.example.glassmate.cpp.Cpp
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.EventChannel
@@ -12,6 +13,7 @@ class MainActivity: FlutterActivity(), EventChannel.StreamHandler {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Cpp.init()
         BleManager.instance.initBluetooth(this)
     }
 
