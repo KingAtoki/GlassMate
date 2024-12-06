@@ -1,7 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:demo_ai_even/views/features/bmp_page.dart';
-import 'package:demo_ai_even/views/features/notification/notification_page.dart';
+import 'package:glassmate/views/features/bmp_page.dart';
+import 'package:glassmate/views/features/game_updates/game_updates_page.dart';
+import 'package:glassmate/views/features/notification/notification_page.dart';
 import 'package:flutter/material.dart';
 
 class FeaturesPage extends StatefulWidget {
@@ -62,6 +63,16 @@ class _FeaturesPageState extends State<FeaturesPage> {
                   ),
                 ),
               ),
+              ListTile(
+            title: const Text('Game Updates'),
+            trailing: const Icon(Icons.sports_football),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const GameUpdatesPage()),
+              );
+            },
+          ),
             ],
           ),
         ),

@@ -1,4 +1,4 @@
-package com.example.demo_ai_even.utils
+package com.example.glassmate.utils
 
 object ByteUtil {
 

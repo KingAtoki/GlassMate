@@ -1,8 +1,9 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:demo_ai_even/ble_manager.dart';
-import 'package:demo_ai_even/services/features_services.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:glassmate/ble_manager.dart';
+import 'package:glassmate/services/features_services.dart';
 
 class BmpPage extends StatefulWidget {
   const BmpPage({super.key});
@@ -12,6 +13,8 @@ class BmpPage extends StatefulWidget {
 }
 
 class _BmpState extends State<BmpPage> {
+  String? generatedBmpPath;
+
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -72,6 +75,78 @@ class _BmpState extends State<BmpPage> {
                   child: const Text("Exit", style: TextStyle(fontSize: 16)),
                 ),
               ),
+              const SizedBox(height: 16),
+              GestureDetector(
+                onTap: () async {
+                  // Define the path for the generated BMP image
+                  final outputPath =
+                      '${Directory.systemTemp.path}/test_image.bmp';
+
+                  // Call the createBmpImage method
+                  FeaturesServices().createBmpImage(
+                    [
+                      {
+                        'text': 'Wed, May 8',
+                        'x': 10,
+                        'y': 10,
+                        'fontSize': 12,
+                      },
+                      {
+                        'text': '12:47',
+                        'x': 10,
+                        'y': 40,
+                        'fontSize': 24,
+                      },
+                      {
+                        'text': 'Task Reminder',
+                        'x': 200,
+                        'y': 10,
+                        'fontSize': 12,
+                      },
+                      {
+                        'text': '1. Develop and test new feature.',
+                        'x': 200,
+                        'y': 30,
+                        'fontSize': 12,
+                      },
+                      {
+                        'text': '2. Fix reported bugs.',
+                        'x': 200,
+                        'y': 50,
+                        'fontSize': 12,
+                      },
+                    ],
+                    outputPath,
+                    width: 576, // Adjust width for the glasses
+                    height: 136, // Adjust height for the glasses
+                  );
+
+                  // Update state to display the image
+                  setState(() {
+                    generatedBmpPath = outputPath;
+                  });
+                },
+                child: Container(
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  alignment: Alignment.center,
+                  child: const Text("Generate BMP",
+                      style: TextStyle(fontSize: 16)),
+                ),
+              ),
+              const SizedBox(height: 16),
+              if (generatedBmpPath != null)
+                Column(
+                  children: [
+                    const Text('Generated BMP Image:',
+                        style: TextStyle(fontSize: 16)),
+                    const SizedBox(height: 10),
+                    Image.file(File(generatedBmpPath!)),
+                  ],
+                ),
             ],
           ),
         ),

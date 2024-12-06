@@ -1,4 +1,4 @@
-package com.example.demo_ai_even.bluetooth
+package com.example.glassmate.bluetooth
 
 import android.Manifest
 import android.app.Activity

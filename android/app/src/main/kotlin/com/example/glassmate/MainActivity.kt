@@ -1,9 +1,9 @@
-package com.example.demo_ai_even
+package com.example.glassmate
 
 import android.os.Bundle
 import android.util.Log
-import com.example.demo_ai_even.bluetooth.BleChannelHelper
-import com.example.demo_ai_even.bluetooth.BleManager
+import com.example.glassmate.bluetooth.BleChannelHelper
+import com.example.glassmate.bluetooth.BleManager
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.EventChannel

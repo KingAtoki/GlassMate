@@ -1,7 +1,7 @@
-package com.example.demo_ai_even.bluetooth
+package com.example.glassmate.bluetooth
 
-import com.example.demo_ai_even.MainActivity
-import com.example.demo_ai_even.model.BlePairDevice
+import com.example.glassmate.MainActivity
+import com.example.glassmate.model.BlePairDevice
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.EventChannel.EventSink

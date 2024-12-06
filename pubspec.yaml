@@ -1,5 +1,5 @@
-name: demo_ai_even
-description: "A new Flutter project."
+name: glassmate
+description: "The official G1 GlassMate app for Even G1 glasses."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -44,6 +44,9 @@ dependencies:
   crclib: ^3.0.0
   # Toast - https://pub.dev/packages/fluttertoast
   fluttertoast: ^8.2.8
+  http: ^1.2.2
+  intl: ^0.20.1
+  image: ^4.3.0
 
 
 dev_dependencies:
@@ -70,6 +73,10 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/fonts/Arial_8.ttf.zip
+    - assets/fonts/Arial_12.ttf.zip
+    - assets/fonts/Arial_24.ttf.zip
+    - assets/fonts/Arial_32.ttf.zip
 
   # To add assets to your application, add an assets section, like this:
   # assets:

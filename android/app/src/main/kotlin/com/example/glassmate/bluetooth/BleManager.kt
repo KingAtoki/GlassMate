@@ -1,4 +1,4 @@
-package com.example.demo_ai_even.bluetooth
+package com.example.glassmate.bluetooth
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -15,9 +15,9 @@ import android.content.Context
 import android.os.Build
 import android.util.Log
 import android.widget.Toast
-import com.example.demo_ai_even.model.BleDevice
-import com.example.demo_ai_even.model.BlePairDevice
-import com.example.demo_ai_even.utils.ByteUtil
+import com.example.glassmate.model.BleDevice
+import com.example.glassmate.model.BlePairDevice
+import com.example.glassmate.utils.ByteUtil
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope

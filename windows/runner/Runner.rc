@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "demo_ai_even" "\0"
+            VALUE "FileDescription", "glassmate" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "demo_ai_even" "\0"
+            VALUE "InternalName", "glassmate" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "demo_ai_even.exe" "\0"
-            VALUE "ProductName", "demo_ai_even" "\0"
+            VALUE "OriginalFilename", "glassmate.exe" "\0"
+            VALUE "ProductName", "glassmate" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

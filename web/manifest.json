@@ -1,6 +1,6 @@
 {
-    "name": "demo_ai_even",
-    "short_name": "demo_ai_even",
+    "name": "glassmate",
+    "short_name": "glassmate",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

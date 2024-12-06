@@ -2,8 +2,8 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:crclib/catalog.dart';
-import 'package:demo_ai_even/ble_manager.dart';
-import 'package:demo_ai_even/utils/utils.dart';
+import 'package:glassmate/ble_manager.dart';
+import 'package:glassmate/utils/utils.dart';
 
 class BmpUpdateManager {
   

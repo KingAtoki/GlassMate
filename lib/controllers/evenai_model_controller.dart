@@ -1,4 +1,4 @@
-import 'package:demo_ai_even/models/evenai_model.dart';
+import 'package:glassmate/models/evenai_model.dart';
 import 'package:get/get.dart';
 
 class EvenaiModelController extends GetxController {

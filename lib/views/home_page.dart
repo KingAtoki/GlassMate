@@ -2,10 +2,10 @@
 
 import 'dart:async';
 
-import 'package:demo_ai_even/ble_manager.dart';
-import 'package:demo_ai_even/services/evenai.dart';
-import 'package:demo_ai_even/views/even_list_page.dart';
-import 'package:demo_ai_even/views/features_page.dart';
+import 'package:glassmate/ble_manager.dart';
+import 'package:glassmate/services/evenai.dart';
+import 'package:glassmate/views/even_list_page.dart';
+import 'package:glassmate/views/features_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -49,37 +49,28 @@ class _HomePageState extends State<HomePage> {
 
   Widget blePairedList() => Expanded(
         child: ListView.separated(
-          separatorBuilder: (context, index) => const SizedBox(height: 5),
+          separatorBuilder: (context, index) => const SizedBox(height: 10),
           itemCount: BleManager.get().getPairedGlasses().length,
           itemBuilder: (context, index) {
             final glasses = BleManager.get().getPairedGlasses()[index];
-            return GestureDetector(
-              onTap: () async {
-                String channelNumber = glasses['channelNumber']!;
-                await BleManager.get().connectToGlasses("Pair_$channelNumber");
-                _refreshPage();
-              },
-              child: Container(
-                height: 72,
-                padding: const EdgeInsets.only(left: 16, right: 16),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(5),
+            return Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              child: ListTile(
+                leading: Icon(Icons.bluetooth, color: Colors.teal),
+                title: Text(
+                  'Pair: ${glasses['channelNumber']}',
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Pair: ${glasses['channelNumber']}'),
-                        Text(
-                            'Left: ${glasses['leftDeviceName']} \nRight: ${glasses['rightDeviceName']}'),
-                      ],
-                    ),
-                  ],
+                subtitle: Text(
+                  'Left: ${glasses['leftDeviceName']} \nRight: ${glasses['rightDeviceName']}',
                 ),
+                onTap: () async {
+                  String channelNumber = glasses['channelNumber']!;
+                  await BleManager.get()
+                      .connectToGlasses("Pair_$channelNumber");
+                  _refreshPage();
+                },
               ),
             );
           },
@@ -87,29 +78,37 @@ class _HomePageState extends State<HomePage> {
       );
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: const Text('Even AI Demo'),
-          actions: [
-            InkWell(
-              onTap: () {
-                print("To Features Page...");
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const FeaturesPage()),
-                );
-              },
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              child: const Padding(
-                padding:
-                    EdgeInsets.only(left: 16, top: 12, bottom: 14, right: 16),
-                child: Icon(Icons.menu),
-              ),
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('GlassMate'),
+        actions: [
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const FeaturesPage()),
+              );
+            },
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            child: const Padding(
+              padding:
+                  EdgeInsets.only(left: 16, top: 12, bottom: 14, right: 16),
+              child: Icon(Icons.menu),
             ),
-          ],
+          ),
+        ],
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.teal.shade700, Colors.teal.shade900],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
         ),
-        body: Padding(
+        child: Padding(
           padding:
               const EdgeInsets.only(left: 16, right: 16, top: 12, bottom: 44),
           child: Column(
@@ -129,8 +128,10 @@ class _HomePageState extends State<HomePage> {
                     borderRadius: BorderRadius.circular(5),
                   ),
                   alignment: Alignment.center,
-                  child: Text(BleManager.get().getConnectionStatus(),
-                      style: const TextStyle(fontSize: 16)),
+                  child: Text(
+                    BleManager.get().getConnectionStatus(),
+                    style: const TextStyle(fontSize: 16),
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
@@ -140,8 +141,6 @@ class _HomePageState extends State<HomePage> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () async {
-                      // todo
-                      print("To AI History List...");
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -164,14 +163,15 @@ class _HomePageState extends State<HomePage> {
                                     width: 50,
                                     height: 50,
                                     child: CircularProgressIndicator(),
-                                  ) // Color(0xFFFEF991)
+                                  )
                                 : Text(
                                     snapshot.data ?? "Loading...",
                                     style: TextStyle(
-                                        fontSize: 14,
-                                        color: BleManager.get().isConnected
-                                            ? Colors.black
-                                            : Colors.grey.withOpacity(0.5)),
+                                      fontSize: 14,
+                                      color: BleManager.get().isConnected
+                                          ? Colors.black
+                                          : Colors.grey.withOpacity(0.5),
+                                    ),
                                     textAlign: TextAlign.center,
                                   ),
                           ),
@@ -183,7 +183,9 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-      );
+      ),
+    );
+  }
 
   @override
   void dispose() {

@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:demo_ai_even/ble_manager.dart';
-import 'package:demo_ai_even/services/evenai_proto.dart';
-import 'package:demo_ai_even/utils/utils.dart';
+import 'package:glassmate/ble_manager.dart';
+import 'package:glassmate/services/evenai_proto.dart';
+import 'package:glassmate/utils/utils.dart';
 
 class Proto {
   static String lR() {

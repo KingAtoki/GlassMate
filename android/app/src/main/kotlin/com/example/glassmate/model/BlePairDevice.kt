@@ -1,4 +1,4 @@
-package com.example.demo_ai_even.model
+package com.example.glassmate.model
 
 import android.bluetooth.BluetoothGatt
 
