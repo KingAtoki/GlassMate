@@ -1,5 +1,3 @@
-
-
 import 'package:glassmate/services/evenai.dart';
 
 class App {

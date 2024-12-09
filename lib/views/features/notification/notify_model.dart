@@ -71,7 +71,7 @@ class NotifyWhitelistModel {
   Map<String, dynamic> toMap() => {
         "calendar_enable": false,
         "call_enable": false,
-        "msg_enable": false,
+        "msg_enable": true,
         "ios_mail_enable": false,
         "app": {
           "list": apps.map((app) => app.toMap()).toList(),

@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:glassmate/ble_manager.dart';
 import 'package:glassmate/services/features_services.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -17,7 +16,6 @@ class LiveGameDetailsPage extends StatefulWidget {
 
 class _LiveGameDetailsPageState extends State<LiveGameDetailsPage> {
   List<String> playHistory = [];
-  final FeaturesServices featuresServices = FeaturesServices();
   File? generatedBmpFile;
 
   @override
@@ -87,14 +85,16 @@ class _LiveGameDetailsPageState extends State<LiveGameDetailsPage> {
 
     const lineHeight = 20; // Adjust the line height as needed
     final config = playHistory
-        .take(5) // Limit to the last 5 plays to fit in the available space
-        .toList() // Convert to a List to use asMap
+        .toList()
+        .skip(playHistory.length > 5 ? playHistory.length - 5 : 0) // Skip all but last 5
+        .take(5)
+        .toList()
         .asMap()
         .entries
         .map((entry) => {
               'text': entry.value,
               'x': 10,
-              'y': 10 +
+              'y': 20 +
                   (entry.key * lineHeight), // Adjust y position dynamically
               'fontSize': 12,
             })
@@ -104,12 +104,12 @@ class _LiveGameDetailsPageState extends State<LiveGameDetailsPage> {
 
     try {
       // Generate and save the BMP image
-      featuresServices.createBmpImage(
+      FeaturesServices().createBmpImage(
         config,
         outputPath,
-        width: 576, // Adjust for glasses max size
-        height: 136, // Adjust for glasses max size
       );
+
+      FeaturesServices().sendBmp(outputPath);
 
       // Explicitly replace the file reference in the widget
       setState(() {

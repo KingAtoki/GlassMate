@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class LiveGamesTab extends StatefulWidget {
+  const LiveGamesTab({super.key});
+
   @override
   _LiveGamesTabState createState() => _LiveGamesTabState();
 }
