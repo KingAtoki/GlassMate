@@ -47,7 +47,6 @@ dependencies:
   http: ^1.2.2
   intl: ^0.20.1
   image: ^4.3.0
-  shared_preferences: ^2.3.3
 
 
 dev_dependencies:
