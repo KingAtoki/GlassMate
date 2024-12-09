@@ -9,7 +9,7 @@ typedef SendResultParse = bool Function(Uint8List value);
 
 class BleManager {
   Function()? onStatusChanged;
-  BleManager._() {}
+  BleManager._();
 
   static BleManager? _instance;
   static BleManager get() {
@@ -23,13 +23,13 @@ class BleManager {
   static const methodSend = "send";
   static const _eventBleReceive = "eventBleReceive";
   static const _channel = MethodChannel('method.bluetooth');
-  
+
   final eventBleReceive = const EventChannel(_eventBleReceive)
       .receiveBroadcastStream(_eventBleReceive)
       .map((ret) => BleReceive.fromMap(ret));
 
   Timer? beatHeartTimer;
-  
+
   final List<Map<String, String>> pairedGlasses = [];
   bool isConnected = false;
   String connectionStatus = 'Not connected';
@@ -60,7 +60,8 @@ class BleManager {
 
   Future<void> connectToGlasses(String deviceName) async {
     try {
-      await _channel.invokeMethod('connectToGlasses', {'deviceName': deviceName});
+      await _channel
+          .invokeMethod('connectToGlasses', {'deviceName': deviceName});
       connectionStatus = 'Connecting...';
     } catch (e) {
       print('Error connecting to device: $e');
@@ -92,7 +93,8 @@ class BleManager {
 
   void _onGlassesConnected(dynamic arguments) {
     print("_onGlassesConnected----arguments----$arguments------");
-    connectionStatus = 'Connected: \n${arguments['leftDeviceName']} \n${arguments['rightDeviceName']}';
+    connectionStatus =
+        'Connected: \n${arguments['leftDeviceName']} \n${arguments['rightDeviceName']}';
     isConnected = true;
 
     onStatusChanged?.call();
@@ -104,7 +106,7 @@ class BleManager {
     beatHeartTimer?.cancel();
     beatHeartTimer = null;
 
-    beatHeartTimer = Timer.periodic(Duration(seconds: 8), (timer) async {
+    beatHeartTimer = Timer.periodic(const Duration(seconds: 8), (timer) async {
       bool isSuccess = await Proto.sendHeartBeat();
       if (!isSuccess && tryTime < 2) {
         tryTime++;
@@ -118,7 +120,7 @@ class BleManager {
   void _onGlassesConnecting() {
     connectionStatus = 'Connecting...';
 
-      onStatusChanged?.call();
+    onStatusChanged?.call();
   }
 
   void _onGlassesDisconnected() {
@@ -130,7 +132,8 @@ class BleManager {
 
   void _onPairedGlassesFound(Map<String, String> deviceInfo) {
     final String channelNumber = deviceInfo['channelNumber']!;
-    final isAlreadyPaired = pairedGlasses.any((glasses) => glasses['channelNumber'] == channelNumber);
+    final isAlreadyPaired = pairedGlasses
+        .any((glasses) => glasses['channelNumber'] == channelNumber);
 
     if (!isAlreadyPaired) {
       pairedGlasses.add(deviceInfo);
@@ -153,12 +156,12 @@ class BleManager {
 
     if (res.data[0].toInt() == 0xF5) {
       final notifyIndex = res.data[1].toInt();
-      
+
       switch (notifyIndex) {
         case 0:
           App.get.exitAll();
           break;
-        case 1: 
+        case 1:
           if (res.lr == 'L') {
             EvenAI.get.lastPageByTouchpad();
           } else {
@@ -176,13 +179,12 @@ class BleManager {
       }
       return;
     }
-      _reqListen.remove(cmd)?.complete(res);
-      _reqTimeout.remove(cmd)?.cancel();
-      if (_nextReceive != null) {
-        _nextReceive?.complete(res);
-        _nextReceive = null;
-      }
-
+    _reqListen.remove(cmd)?.complete(res);
+    _reqTimeout.remove(cmd)?.cancel();
+    if (_nextReceive != null) {
+      _nextReceive?.complete(res);
+      _nextReceive = null;
+    }
   }
 
   String getConnectionStatus() {
@@ -194,6 +196,7 @@ class BleManager {
   }
 
 
+
   static final _reqListen = <String, Completer<BleReceive>>{};
   static final _reqTimeout = <String, Timer>{};
   static Completer<BleReceive>? _nextReceive;
@@ -201,13 +204,13 @@ class BleManager {
   static _checkTimeout(String cmd, int timeoutMs, Uint8List data, String lr) {
     _reqTimeout.remove(cmd);
     var cb = _reqListen.remove(cmd);
-    print('${DateTime.now()} _checkTimeout-----timeoutMs----$timeoutMs-----cb----$cb-----');
+    print(
+        '${DateTime.now()} _checkTimeout-----timeoutMs----$timeoutMs-----cb----$cb-----');
     if (cb != null) {
       var res = BleReceive();
       res.isTimeout = true;
       //var showData = data.length > 50 ? data.sublist(0, 50) : data;
-      print(
-          "send Timeout $cmd of $timeoutMs");
+      print("send Timeout $cmd of $timeoutMs");
       cb.complete(res);
     }
 
@@ -240,8 +243,7 @@ class BleManager {
     }
     ret = BleReceive();
     ret.isTimeout = true;
-    print(
-        "requestRetry $lr timeout of $timeoutMs");
+    print("requestRetry $lr timeout of $timeoutMs");
     return ret;
   }
 
@@ -251,7 +253,6 @@ class BleManager {
     SendResultParse? isSuccess,
     int? retry,
   }) async {
-
     var ret = await BleManager.requestRetry(data,
         lr: "L", timeoutMs: timeoutMs, retry: retry ?? 0);
     if (ret.isTimeout) {
@@ -275,7 +276,6 @@ class BleManager {
 
   static Future sendData(Uint8List data,
       {String? lr, Map<String, dynamic>? other, int secondDelay = 100}) async {
-
     var params = <String, dynamic>{
       'data': data,
     };
@@ -288,9 +288,9 @@ class BleManager {
       ret = await BleManager.invokeMethod(methodSend, params);
       return ret;
     } else {
-      params["lr"] = "L"; // get().slave; 
-      var ret = await _channel
-          .invokeMethod(methodSend, params); //ret is true or false or null
+      params["lr"] = "L"; // get().slave;
+      var ret = await _channel.invokeMethod(
+          methodSend, params); //ret is true or false or null
       if (ret == true) {
         params["lr"] = "R"; // get().master;
         ret = await BleManager.invokeMethod(methodSend, params);
@@ -310,7 +310,6 @@ class BleManager {
       Map<String, dynamic>? other,
       int timeoutMs = 1000, //500,
       bool useNext = false}) async {
-
     var lr0 = lr ?? Proto.lR();
     var completer = Completer<BleReceive>();
     String cmd = "$lr0${data[0].toRadixString(16).padLeft(2, '0')}";
@@ -341,7 +340,7 @@ class BleManager {
     });
 
     await sendData(data, lr: lr, other: other).timeout(
-      Duration(seconds: 2),
+      const Duration(seconds: 2),
       onTimeout: () {
         _reqTimeout.remove(cmd)?.cancel();
         var ret = BleReceive();
@@ -365,7 +364,8 @@ class BleManager {
     String? lr,
     int? timeoutMs,
   }) async {
-    print("requestList---sendList---${sendList.first}----lr---$lr----timeoutMs----$timeoutMs-");
+    print(
+        "requestList---sendList---${sendList.first}----lr---$lr----timeoutMs----$timeoutMs-");
 
     if (lr != null) {
       return await _requestList(sendList, lr, timeoutMs: timeoutMs);
@@ -399,7 +399,6 @@ class BleManager {
     }
     return true;
   }
-
 }
 
 extension Uint8ListEx on Uint8List {

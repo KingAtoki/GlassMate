@@ -19,10 +19,10 @@ class GameUpdatesPage extends StatelessWidget {
             ],
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
             LiveGamesTab(),
-            const UpcomingGamesTab(),
+            UpcomingGamesTab(),
           ],
         ),
       ),

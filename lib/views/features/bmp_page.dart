@@ -88,39 +88,38 @@ class _BmpState extends State<BmpPage> {
                       {
                         'text': 'Wed, May 8',
                         'x': 10,
-                        'y': 10,
-                        'fontSize': 12,
+                        'y': 20,
+                        'fontSize': 24,
                       },
                       {
                         'text': '12:47',
                         'x': 10,
-                        'y': 40,
-                        'fontSize': 24,
+                        'y': 50,
+                        'fontSize': 32,
                       },
                       {
                         'text': 'Task Reminder',
                         'x': 200,
-                        'y': 10,
+                        'y': 20,
                         'fontSize': 12,
                       },
                       {
                         'text': '1. Develop and test new feature.',
                         'x': 200,
-                        'y': 30,
+                        'y': 40,
                         'fontSize': 12,
                       },
                       {
                         'text': '2. Fix reported bugs.',
                         'x': 200,
-                        'y': 50,
+                        'y': 60,
                         'fontSize': 12,
                       },
                     ],
                     outputPath,
-                    width: 576, // Adjust width for the glasses
-                    height: 136, // Adjust height for the glasses
                   );
 
+                  FeaturesServices().sendBmp(outputPath);
                   // Update state to display the image
                   setState(() {
                     generatedBmpPath = outputPath;
