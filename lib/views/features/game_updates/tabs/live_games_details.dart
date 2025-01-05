@@ -63,11 +63,10 @@ class _LiveGameDetailsPageState extends State<LiveGameDetailsPage> {
           setState(() {
             if (playHistory.isEmpty || playHistory.last != lastPlay['text']) {
               playHistory.add(lastPlay['text']);
+              // Regenerate BMP after updating play history
+              _generateBmpForLastUpdates();
             }
           });
-
-          // Regenerate BMP after updating play history
-          await _generateBmpForLastUpdates();
         }
       } else {
         print('API Error: ${response.statusCode}');
